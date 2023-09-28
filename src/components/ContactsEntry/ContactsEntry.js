@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -10,6 +9,8 @@ import {
   ErrorMsg,
   Title,
 } from './ContactsEntry.styled';
+import { useDispatch } from 'react-redux';
+import { addContact } from 'redux/contactsSlice';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -26,7 +27,8 @@ const SignupSchema = Yup.object().shape({
     .required('Required'),
 });
 
-export const ContactsEntry = ({ onAddContact }) => {
+export const ContactsEntry = () => {
+  const dispatch = useDispatch();
   return (
     <>
       <Title>Phonebook</Title>
@@ -37,7 +39,7 @@ export const ContactsEntry = ({ onAddContact }) => {
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, reset) => {
-          onAddContact(values);
+          dispatch(addContact(values));
           reset.resetForm();
         }}
       >
@@ -67,8 +69,4 @@ export const ContactsEntry = ({ onAddContact }) => {
       </Formik>
     </>
   );
-};
-
-ContactsEntry.propTypes = {
-  onAddContact: PropTypes.func,
 };

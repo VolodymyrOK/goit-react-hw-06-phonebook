@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import { Filter } from 'components/Filter/Filter';
 import {
   ContactList,
@@ -9,8 +8,10 @@ import {
   MessageAboutEmpty,
   Title,
 } from './ContactsList.styled';
+import { delContact } from 'redux/contactsSlice';
 
-export const ContactsList = ({ onDelContact, onChangeFilter }) => {
+export const ContactsList = () => {
+  const dispatch = useDispatch();
   const visibleContacts = useSelector(state => state.stateContacts.contacts);
   const filter = useSelector(state => state.stateFilter.filter);
 
@@ -22,7 +23,7 @@ export const ContactsList = ({ onDelContact, onChangeFilter }) => {
     <>
       <HeadContacts>
         <Title>Contacts</Title>
-        <Filter onChangeFilter={onChangeFilter} />
+        <Filter />
       </HeadContacts>
       <ContactList>
         {contacts.length === 0 ? (
@@ -33,7 +34,10 @@ export const ContactsList = ({ onDelContact, onChangeFilter }) => {
               <span>{name}:</span>
               <span>{number}</span>
               <span>
-                <DelButton type="button" onClick={() => onDelContact(id)}>
+                <DelButton
+                  type="button"
+                  onClick={() => dispatch(delContact(id))}
+                >
                   Delete
                 </DelButton>
               </span>
@@ -43,9 +47,4 @@ export const ContactsList = ({ onDelContact, onChangeFilter }) => {
       </ContactList>
     </>
   );
-};
-
-ContactsList.propTypes = {
-  onChangeFilter: PropTypes.func,
-  onDelContact: PropTypes.func,
 };

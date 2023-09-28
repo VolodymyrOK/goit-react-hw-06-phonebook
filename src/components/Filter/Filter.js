@@ -1,18 +1,17 @@
-import PropTypes from 'prop-types';
 import { Input } from './Filter.styled';
+import { useDispatch } from 'react-redux';
+import { changeFilter } from 'redux/filterSlice';
 
-export const Filter = ({ onChangeFilter }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Input
         type="text"
         placeholder="Search..."
-        onChange={evt => onChangeFilter(evt.target.value)}
+        onChange={evt => dispatch(changeFilter(evt.target.value))}
       ></Input>
     </>
   );
-};
-
-Filter.propTypes = {
-  onChangeFilter: PropTypes.func,
 };
