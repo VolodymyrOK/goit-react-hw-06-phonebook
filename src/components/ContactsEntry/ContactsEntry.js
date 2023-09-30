@@ -9,7 +9,7 @@ import {
   ErrorMsg,
   Title,
 } from './ContactsEntry.styled';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contactsSlice';
 
 const SignupSchema = Yup.object().shape({
@@ -29,6 +29,8 @@ const SignupSchema = Yup.object().shape({
 
 export const ContactsEntry = () => {
   const dispatch = useDispatch();
+  const contacts = useSelector(state => state.stateContacts.contacts);
+
   return (
     <>
       <Title>Phonebook</Title>
@@ -39,6 +41,11 @@ export const ContactsEntry = () => {
         }}
         validationSchema={SignupSchema}
         onSubmit={(values, reset) => {
+          const isDuplicated = contacts.find(
+            item => item.name.toLowerCase() === values.name.toLowerCase()
+          );
+          if (isDuplicated)
+            return alert(values.name + ' is already in contacts');
           dispatch(addContact(values));
           reset.resetForm();
         }}

@@ -10,22 +10,15 @@ const slice = createSlice({
   initialState: initialState,
   reducers: {
     addContact(state, action) {
-      const isDuplicated = state.contacts.find(
-        item => item.name.toLowerCase() === action.payload.name.toLowerCase()
-      );
-      if (isDuplicated)
-        return alert(action.payload.name + ' is already in contacts');
       return {
         contacts: [...state.contacts, { id: nanoid(4), ...action.payload }],
       };
     },
 
     delContact(state, action) {
-      if (window.confirm('Are you sure?'))
-        return {
-          contacts: state.contacts.filter(({ id }) => id !== action.payload),
-        };
-      return;
+      return {
+        contacts: state.contacts.filter(({ id }) => id !== action.payload),
+      };
     },
   },
 });

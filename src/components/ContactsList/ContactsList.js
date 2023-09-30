@@ -36,7 +36,10 @@ export const ContactsList = () => {
               <span>
                 <DelButton
                   type="button"
-                  onClick={() => dispatch(delContact(id))}
+                  onClick={() => {
+                    if (window.confirm('Are you sure?'))
+                      dispatch(delContact(id));
+                  }}
                 >
                   Delete
                 </DelButton>
