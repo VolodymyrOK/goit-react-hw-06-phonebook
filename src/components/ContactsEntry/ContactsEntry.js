@@ -10,7 +10,7 @@ import {
   Title,
 } from './ContactsEntry.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactsSlice';
+import { addContact, getContacts } from 'redux/contacts/contactsSlice';
 
 const SignupSchema = Yup.object().shape({
   name: Yup.string()
@@ -29,7 +29,7 @@ const SignupSchema = Yup.object().shape({
 
 export const ContactsEntry = () => {
   const dispatch = useDispatch();
-  const contacts = useSelector(state => state.stateContacts.contacts);
+  const contacts = useSelector(getContacts);
 
   return (
     <>

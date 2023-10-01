@@ -8,12 +8,13 @@ import {
   MessageAboutEmpty,
   Title,
 } from './ContactsList.styled';
-import { delContact } from 'redux/contactsSlice';
+import { delContact, getContacts } from 'redux/contacts/contactsSlice';
+import { getFilter } from 'redux/filter/filterSlice';
 
 export const ContactsList = () => {
   const dispatch = useDispatch();
-  const visibleContacts = useSelector(state => state.stateContacts.contacts);
-  const filter = useSelector(state => state.stateFilter.filter);
+  const visibleContacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
 
   const contacts = visibleContacts.filter(item =>
     item.name.toLowerCase().includes(filter.toLowerCase())
